@@ -10,7 +10,10 @@ describe('computer list app', function() {
 	var discontinued=element(by.id('discontinued'));
 	var company=element(by.id('company'));
     var submit=element(by.css('#main > form > div > input'));
-	//wait for element to be present function with a timeout of 3 seconds
+	var required=element(by.css('#main > form > fieldset > div.clearfix.error > div > span'));
+	var introText=element(by.css('#main > form > fieldset > div.clearfix.error > label'));
+	
+	//function to wait for element to be present with a timeout of 3 seconds
 	function waitfor(element){
 		browser.wait(function() {
     return element.isDisplayed();
@@ -18,7 +21,30 @@ describe('computer list app', function() {
 	}
 		
 		
-		
+  it('should NOT create a computer with missing name', function() {
+    
+    browser.get('http://computer-database.herokuapp.com/computers');
+	browser.driver.manage().window().maximize();
+	waitfor(addComputer);
+	addComputer.click();
+	submit.click();
+	expect(required.getText()).toEqual('Required');
+  }); 
+  
+  it('should NOT create a computer instance with invalid date', function() {
+    
+    browser.get('http://computer-database.herokuapp.com/computers');
+	
+	waitfor(addComputer);
+	addComputer.click();
+	waitfor(name);
+	name.sendKeys('Testcase1');
+	introduced.sendKeys('abc');
+	submit.click();
+	waitfor(submit);   //the assertion in this case is simply the presence of the submit button
+					   //which should not be there except if the form contains errors
+}); 
+  
   it('should create a computer instance with name Testcase1', function() {
     
     browser.get('http://computer-database.herokuapp.com/computers');
@@ -32,7 +58,7 @@ describe('computer list app', function() {
 	expect(message.getText()).toEqual('Done! Computer Testcase1 has been created');
     
     
-    //expect(todoList.get(2).getText()).toEqual('write first protractor test');
+    //expect(todoList.get(2).getText()).toEqual('write first protractor test');  müller   ミラー
 	//var completedAmount = element.all(by.css('.done-true'));
     
   });

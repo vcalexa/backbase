@@ -1,4 +1,8 @@
 exports.config = {
   seleniumAddress: 'http://localhost:4444/wd/hub',
-  specs: ['create.js']
+  suites: {
+  Createnew:'create.js',
+  Update:'update.js'
+  }
+  
 };
