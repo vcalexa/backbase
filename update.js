@@ -24,7 +24,7 @@ describe('computer list app', function() {
   
   
   
-  it('should create a computer instance with name Testcase2', function() {
+ /*  it('should create a computer instance with name Testcase2', function() {
     
     browser.get('http://computer-database.herokuapp.com/computers');
 	
@@ -43,7 +43,7 @@ describe('computer list app', function() {
     //expect(todoList.get(2).getText()).toEqual('write first protractor test');
 	//var completedAmount = element.all(by.css('.done-true'));
     
-  });
+  }); */
   
 
   

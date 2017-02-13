@@ -4,36 +4,39 @@ describe('computer list app', function() {
 	//element locators are defined before the actual tests
 	var searchbox=element(by.css('#searchbox'));
 	var message=element(by.css('#main > div.alert-message.warning'));
-    var addComputer=element(by.id('add'));
+	var addComputer=element(by.id('add'));
 	var name=element(by.id('name'));
 	var introduced=element(by.id('introduced'));
 	var discontinued=element(by.id('discontinued'));
 	var company=element(by.id('company'));
-    var submit=element(by.css('#main > form > div > input'));
+	var submit=element(by.css('#main > form > div > input'));
 	var required=element(by.css('#main > form > fieldset > div.clearfix.error > div > span'));
 	var introText=element(by.css('#main > form > fieldset > div.clearfix.error > label'));
+	var numberOfComputers=element(by.css('#pagination > ul > li.current > a'));
+	
 	
 	//function to wait for element to be present with a timeout of 3 seconds
 	function waitfor(element){
 		browser.wait(function() {
-    return element.isDisplayed();
-}, 3000);
+	return element.isDisplayed();
+	}, 3000);
 	}
 		
 		
   it('should NOT create a computer with missing name', function() {
-    
-    browser.get('http://computer-database.herokuapp.com/computers');
+	
+	browser.get('http://computer-database.herokuapp.com/computers');
 	browser.driver.manage().window().maximize();
 	waitfor(addComputer);
+
 	addComputer.click();
 	submit.click();
 	expect(required.getText()).toEqual('Required');
   }); 
   
   it('should NOT create a computer instance with invalid date', function() {
-    
-    browser.get('http://computer-database.herokuapp.com/computers');
+	
+	browser.get('http://computer-database.herokuapp.com/computers');
 	
 	waitfor(addComputer);
 	addComputer.click();
@@ -43,11 +46,11 @@ describe('computer list app', function() {
 	submit.click();
 	waitfor(submit);   //the assertion in this case is simply the presence of the submit button
 					   //which should not be there except if the form contains errors
-}); 
+  }); 
   
   it('should create a computer instance with name Testcase1', function() {
-    
-    browser.get('http://computer-database.herokuapp.com/computers');
+	
+	browser.get('http://computer-database.herokuapp.com/computers');
 	
 	waitfor(addComputer);
 	addComputer.click();
@@ -56,16 +59,16 @@ describe('computer list app', function() {
 	submit.click();
 	waitfor(message);
 	expect(message.getText()).toEqual('Done! Computer Testcase1 has been created');
-    
-    
-    //expect(todoList.get(2).getText()).toEqual('write first protractor test');  müller   ミラー
+	
+	
+	//expect(todoList.get(2).getText()).toEqual('write first protractor test');  müller   ミラー
 	//var completedAmount = element.all(by.css('.done-true'));
-    
+	
   });
   
   it('should create a computer instance with name TC2, dates and company', function() {
-    
-    browser.get('http://computer-database.herokuapp.com/computers');
+	
+	browser.get('http://computer-database.herokuapp.com/computers');
 	waitfor(addComputer);
 	addComputer.click();
 	waitfor(name);
@@ -76,6 +79,31 @@ describe('computer list app', function() {
 	submit.click();
 	waitfor(message);
 	expect(message.getText()).toEqual('Done! Computer TC2 has been created');
-    browser.driver.sleep(2500);
+  });
+  
+  it('should create a computer instance and increment the number of computers', function() {
+	
+	browser.get('http://computer-database.herokuapp.com/computers');
+	
+	
+	var myNumberParser = function(webElement, addNumber){
+            return new Promise(function(resolve_myCustomNumberParser, reject_myCustomNumberParser){
+                webElement.getText().then(function (text) {
+                    var firstNumber = parseInt(text.slice(-4));
+                    waitfor(addComputer);
+                    addComputer.click();
+                    waitfor(name);
+                    name.sendKeys('TC3');
+                    submit.click();
+                    webElement.getText().then(function (text) {
+                        var secondNumber = parseInt(text.slice(-4));//get the last characters of the string to get the no of computers
+                        expect(firstNumber+1).toBe(secondNumber);//this is the actual assertion that the number is incremented
+                    })
+                })
+            });
+        };
+		myNumberParser(numberOfComputers,1);
+	waitfor(message);
+	
   });
 });
