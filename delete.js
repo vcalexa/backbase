@@ -1,4 +1,4 @@
-describe('computer list app', function() {
+describe('computer list app - delete functionality', function() {
     browser.ignoreSynchronization = true;
 
     //element locators are defined before the actual tests
