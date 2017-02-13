@@ -4,12 +4,6 @@ describe('computer list app', function() {
     //element locators are defined before the actual tests
     var searchbox = element(by.css('#searchbox'));
     var message = element(by.css('#main > div.alert-message.warning'));
-    var addComputer = element(by.id('add'));
-    var name = element(by.id('name'));
-    var introduced = element(by.id('introduced'));
-    var discontinued = element(by.id('discontinued'));
-    var company = element(by.id('company'));
-    var submit = element(by.css('#main > form > div > input'));
     var required = element(by.css('#main > form > fieldset > div.clearfix.error > div > span'));
     var introText = element(by.css('#main > form > fieldset > div.clearfix.error > label'));
     var firstComputer = element(by.css('#main > table > tbody > tr:nth-child(1) > td:nth-child(1) > a'));
@@ -50,6 +44,7 @@ describe('computer list app', function() {
                     var firstNumber = parseInt(text.slice(-4));
                     waitfor(searchbox);
                     searchbox.sendKeys('TC3');
+					searchSubmit.click();
 					waitfor(firstComputer);
                     firstComputer.click();
                     waitfor(deleteButton);
@@ -62,6 +57,8 @@ describe('computer list app', function() {
             });
         };
 		numberParser(numberOfComputers);
+		waitfor(message);
+        expect(message.getText()).toEqual('Done! Computer has been deleted');
     });
 	
 	

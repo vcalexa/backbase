@@ -3,7 +3,8 @@ exports.config = {
   suites: {
   Createnew:'create.js',
   Update:'update.js',
-  Delete:'delete.js'
+  Delete:'delete.js',
+  Read:'read.js'
   }
   
 };
