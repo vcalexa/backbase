@@ -61,9 +61,6 @@ describe('computer list app', function() {
 	expect(message.getText()).toEqual('Done! Computer Testcase1 has been created');
 	
 	
-	//expect(todoList.get(2).getText()).toEqual('write first protractor test');  müller   ミラー
-	//var completedAmount = element.all(by.css('.done-true'));
-	
   });
   
   it('should create a computer instance with name TC2, dates and company', function() {
@@ -86,23 +83,23 @@ describe('computer list app', function() {
 	browser.get('http://computer-database.herokuapp.com/computers');
 	
 	
-	var myNumberParser = function(webElement, addNumber){
-            return new Promise(function(resolve_myCustomNumberParser, reject_myCustomNumberParser){
+	var myNumberParser = function(webElement){
+            return new Promise(function(){
                 webElement.getText().then(function (text) {
-                    var firstNumber = parseInt(text.slice(-4));
+                    var firstNumber = parseInt(text.slice(-4));//get the last characters of the string to get the no of computers
                     waitfor(addComputer);
                     addComputer.click();
                     waitfor(name);
                     name.sendKeys('TC3');
                     submit.click();
                     webElement.getText().then(function (text) {
-                        var secondNumber = parseInt(text.slice(-4));//get the last characters of the string to get the no of computers
-                        expect(firstNumber+1).toBe(secondNumber);//this is the actual assertion that the number is incremented
+                        var secondNumber = parseInt(text.slice(-4));
+                        expect(firstNumber+1).toBe(secondNumber);//this is the actual assertion that the number is incremented by 1
                     })
                 })
             });
         };
-		myNumberParser(numberOfComputers,1);
+		myNumberParser(numberOfComputers);
 	waitfor(message);
 	
   });
