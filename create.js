@@ -83,7 +83,7 @@ describe('computer list app', function() {
 	browser.get('http://computer-database.herokuapp.com/computers');
 	
 	
-	var myNumberParser = function(webElement){
+	var numberParser = function(webElement){
             return new Promise(function(){
                 webElement.getText().then(function (text) {
                     var firstNumber = parseInt(text.slice(-4));//get the last characters of the string to get the no of computers
@@ -99,7 +99,7 @@ describe('computer list app', function() {
                 })
             });
         };
-		myNumberParser(numberOfComputers);
+		numberParser(numberOfComputers);
 	waitfor(message);
 	
   });
